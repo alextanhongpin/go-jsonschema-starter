@@ -14,11 +14,8 @@ func main() {
 	doc := []byte(`{"foo": "bar", "age": "10"}`)
 	schema := gojsonschema.NewStringLoader(userSchema)
 
-	fmt.Println("Schema:")
-	fmt.Println(userSchema)
-
-	fmt.Println("Document:")
-	fmt.Println(string(doc))
+	fmt.Println("Schema:", userSchema)
+	fmt.Println("Document:", string(doc))
 
 	result, err := gojsonschema.Validate(schema, gojsonschema.NewBytesLoader(doc))
 	if err != nil {
@@ -30,6 +27,13 @@ func main() {
 		println("The document is not valid. see errors:")
 		for _, desc := range result.Errors() {
 			fmt.Println("-", desc)
+			fmt.Println("Type:", desc.Type())
+			fmt.Println("Field:", desc.Field())
+			fmt.Println("Description:", desc.Description())
+			fmt.Println("DescriptionFormat:", desc.DescriptionFormat())
+			fmt.Println("Value:", desc.Value())
+			fmt.Println("Details:", desc.Details())
+			fmt.Println()
 		}
 	}
 }
